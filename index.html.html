@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insta Content & Viral Studio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: #e1306c;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .cat-btn {
+            background: #334155;
+            color: #fff;
+            border: 2px solid transparent;
+            padding: 12px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            background: #e1306c;
+            border-color: #f472b6;
+        }
+
+        .card {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #e1306c;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: #f472b6;
+            margin-bottom: 12px;
+        }
+
+        .hook-box {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .hashtag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #334155;
+            color: #38bdf8;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .tips-list {
+            margin-left: 20px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .tips-list li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 Insta Content Growth Studio</h1>
+    <p class="subtitle">Select a category to get viral reel ideas, hooks, hashtags, and strategies!</p>
+
+    <div class="category-grid">
+        <button class="cat-btn active" onclick="loadContent('tech')">💻 Tech</button>
+        <button class="cat-btn" onclick="loadContent('comedy')">😂 Comedy</button>
+        <button class="cat-btn" onclick="loadContent('editing')">🎬 Editing</button>
+        <button class="cat-btn" onclick="loadContent('motivation')">🔥 Motivation</button>
+        <button class="cat-btn" onclick="loadContent('vlogging')">🎥 Vlogging</button>
+    </div>
+
+    <div class="card">
+        <h2 id="cat-title">Tech Content Ideas</h2>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">🔥 Viral Reel Hooks (Pehle 3 seconds mein bolein/dikhayein):</p>
+        <div id="hooks-container"></div>
+    </div>
+
+    <div class="card">
+        <h2>🏷️ Top Trending Hashtags</h2>
+        <div class="hashtag-container" id="hashtags-container"></div>
+    </div>
+
+    <div class="card">
+        <h2>💡 Editing & Growth Strategy</h2>
+        <ul class="tips-list" id="tips-container"></ul>
+    </div>
+</div>
+
+<script>
+    const data = {
+        tech: {
+            title: "💻 Tech Content Strategy",
+            hooks: [
+                "“Android users yeh Secret setting abhi off kar do!”",
+                "“3 Secret AI Websites jo har student/creator ko pata honi chahiye!”",
+                "“Ye Tech Shortcut aapka 2 ghante ka kaam 2 minute mein kar dega!”"
+            ],
+            hashtags: ["#TechTips", "#TechTricks", "#UsefulWebsites", "#GadgetsIndia", "#TechReels", "#AiTools"],
+            tips: [
+                "Video mein hamesha Screen Recording ke sath On-screen text lagayein.",
+                "Pehle 3 sec mein problem dikhayein aur agle 15 sec mein solution.",
+                "Direct link ke liye bio mein linktree/website rakhein."
+            ]
+        },
+        comedy: {
+            title: "😂 Comedy & Entertainment Strategy",
+            hooks: [
+                "“Gharwale jab relatives ke samne bezati karte hain!”",
+                "“Bro thinks he is the main character 😂”",
+                "“Exam ke ek raat pehle har student ka haal…”"
+            ],
+            hashtags: ["#ComedyReels", "#RelatableMemes", "#DesiHumor", "#FunniestVideos", "#InstaComedy"],
+            tips: [
+                "Relatable topics par video banayein jo log doston ke sath share karein.",
+                "Fast cuts aur funny sound effects (SFX) ka use karein.",
+                "Caption mein likhein: 'Tag that friend who relates to this!'."
+            ]
+        },
+        editing: {
+            title: "🎬 Video Editing Tutorial Strategy",
+            hooks: [
+                "“Stop making boring video transitions! Try this…”",
+                "“Aise Cinematic Reels banane ki 3 secret tricks!”",
+                "“CapCut / Premier Pro ka yeh Effect viral hone ki chabi hai!”"
+            ],
+            hashtags: ["#VideoEditing", "#Edius7", "#CapCutTutorial", "#ReelEditing", "#CinematicReel", "#Filmmaking"],
+            tips: [
+                "Before vs After ka difference zarur dikhayein.",
+                "Fast beats aur trending bass sound par cuts lagayein.",
+                "Overlay text aur sound effect se retention badhayein."
+            ]
+        },
+        motivation: {
+            title: "🔥 Motivation & Quotes Strategy",
+            hooks: [
+                "“Agar aap life mein successful hona chahte hain toh yeh 1 rule yaad rakhein…”",
+                "“Don't waste your 20s! Do this instead.”",
+                "“3 Mindset Shifts jo aapki life badal denge!”"
+            ],
+            hashtags: ["#MotivationIndia", "#SuccessMindset", "#DailyMotivation", "#HardworkPaysoff", "#QuotesDaily"],
+            tips: [
+                "4K High-Quality Aesthetic clips (nature, gym, luxury, working) background mein chalayein.",
+                "Deep audio / Motivational background music use karein.",
+                "Text ko readable aur stylish font mein center par rakhein."
+            ]
+        },
+        vlogging: {
+            title: "🎥 Daily Vlogging & Lifestyle Strategy",
+            hooks: [
+                "“Aaj humne explore kiya city ka sabse hidden spot!”",
+                "“Day 1 of 30 Days Mini Vlog Challenge 🔥”",
+                "“Aaj mere sath yeh kya ho gaya…”"
+            ],
+            hashtags: ["#MiniVlog", "#DailyVlog", "#VloggersIndia", "#LifestyleVlog", "#TravelDiaries"],
+            tips: [
+                "Storytelling fast rakhein — 30-45 seconds se jyada ka mini vlog mat banayein.",
+                "Voiceover clear rakhein aur energetic tone mein bolein.",
+                "B-Roll shots (slow motion, cinematic angles) zaroor include karein."
+            ]
+        }
+    };
+
+    function loadContent(catKey) {
+        // Toggle Active Button
+        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+
+        const catData = data[catKey];
+        document.getElementById('cat-title').innerText = catData.title;
+
+        // Load Hooks
+        const hooksContainer = document.getElementById('hooks-container');
+        hooksContainer.innerHTML = catData.hooks.map(hook => `<div class="hook-box">👉 ${hook}</div>`).join('');
+
+        // Load Hashtags
+        const hashtagsContainer = document.getElementById('hashtags-container');
+        hashtagsContainer.innerHTML = catData.hashtags.map(tag => `<span class="tag">${tag}</span>`).join('');
+
+        // Load Tips
+        const tipsContainer = document.getElementById('tips-container');
+        tipsContainer.innerHTML = catData.tips.map(tip => `<li>${tip}</li>`).join('');
+    }
+
+    // Initial Load
+    loadContent('tech');
+</script>
+
+</body>
+</html>
