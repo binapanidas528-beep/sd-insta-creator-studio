@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insta Content & Viral Studio</title>
+    <title>Insta Content & Viral Studio Pro</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,7 +21,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             background: #1e293b;
             padding: 25px;
@@ -45,8 +45,8 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
             margin-bottom: 25px;
         }
 
@@ -54,10 +54,11 @@
             background: #334155;
             color: #fff;
             border: 2px solid transparent;
-            padding: 12px 10px;
+            padding: 10px 8px;
             border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
             text-align: center;
         }
@@ -75,10 +76,31 @@
             margin-bottom: 20px;
         }
 
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
         .card h2 {
             font-size: 1.2rem;
             color: #f472b6;
-            margin-bottom: 12px;
+        }
+
+        .copy-all-btn {
+            background: #e1306c;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .copy-all-btn:active {
+            transform: scale(0.95);
         }
 
         .hook-box {
@@ -87,6 +109,21 @@
             border-radius: 8px;
             margin-bottom: 10px;
             font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mini-copy {
+            background: #334155;
+            color: #38bdf8;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            white-space: nowrap;
         }
 
         .hashtag-container {
@@ -102,6 +139,13 @@
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tag:hover {
+            background: #0284c7;
+            color: #fff;
         }
 
         .tips-list {
@@ -113,13 +157,36 @@
         .tips-list li {
             margin-bottom: 8px;
         }
+
+        /* Toast notification */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #22c55e;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 10px;
+            position: fixed;
+            z-index: 100;
+            bottom: 30px;
+            font-weight: 600;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.3s, fadeout 0.3s 1.7s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🚀 Insta Content Growth Studio</h1>
-    <p class="subtitle">Select a category to get viral reel ideas, hooks, hashtags, and strategies!</p>
+    <h1>🚀 Insta Content Growth Studio Pro</h1>
+    <p class="subtitle">Viral Reel Hooks, One-Click Hashtag Copy & Custom Growth Strategies!</p>
 
     <div class="category-grid">
         <button class="cat-btn active" onclick="loadContent('tech')">💻 Tech</button>
@@ -127,16 +194,23 @@
         <button class="cat-btn" onclick="loadContent('editing')">🎬 Editing</button>
         <button class="cat-btn" onclick="loadContent('motivation')">🔥 Motivation</button>
         <button class="cat-btn" onclick="loadContent('vlogging')">🎥 Vlogging</button>
+        <button class="cat-btn" onclick="loadContent('gaming')">🎮 Gaming</button>
+        <button class="cat-btn" onclick="loadContent('fitness')">🏋️ Fitness</button>
+        <button class="cat-btn" onclick="loadContent('fashion')">👗 Fashion</button>
     </div>
 
     <div class="card">
         <h2 id="cat-title">Tech Content Ideas</h2>
-        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">🔥 Viral Reel Hooks (Pehle 3 seconds mein bolein/dikhayein):</p>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin: 8px 0 12px 0;">🔥 Viral Reel Hooks (Pehle 3 seconds mein bolein/dikhayein):</p>
         <div id="hooks-container"></div>
     </div>
 
     <div class="card">
-        <h2>🏷️ Top Trending Hashtags</h2>
+        <div class="card-header">
+            <h2>🏷️ Top Trending Hashtags</h2>
+            <button class="copy-all-btn" onclick="copyAllHashtags()">📋 Copy All Tags</button>
+        </div>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">(Kisi bhi tag par click karke single tag copy karein ya Copy All button dabayein)</p>
         <div class="hashtag-container" id="hashtags-container"></div>
     </div>
 
@@ -145,6 +219,8 @@
         <ul class="tips-list" id="tips-container"></ul>
     </div>
 </div>
+
+<div id="toast">Copied to Clipboard! 📋</div>
 
 <script>
     const data = {
@@ -217,28 +293,103 @@
                 "Voiceover clear rakhein aur energetic tone mein bolein.",
                 "B-Roll shots (slow motion, cinematic angles) zaroor include karein."
             ]
+        },
+        gaming: {
+            title: "🎮 Gaming Highlights & Tips Strategy",
+            hooks: [
+                "“Only 1% of gamers know this secret trick!”",
+                "“Aise clutch gameplay record karne ki best setting!”",
+                "“Top 3 Games jo aapko abhi try karne chahiye!”"
+            ],
+            hashtags: ["#GamingReels", "#GamerLife", "#BGMIHighlights", "#FreeFireIndia", "#GamingTips"],
+            tips: [
+                "High intensity clips/kills par sync beats aur bass drop music lagayein.",
+                "Video par facecam overlays ya energetic commentary add karein.",
+                "End screen par puchhein: 'Aapka favorite game kaunsa hai?'."
+            ]
+        },
+        fitness: {
+            title: "🏋️ Fitness & Workout Strategy",
+            hooks: [
+                "“Agar aapka Biceps grow nahi ho raha, toh yeh mistake kar rahe hain!”",
+                "“Fat Loss ke liye 3 Sabse Effective Exercises!”",
+                "“What I eat in a day for Muscle Gain 💪”"
+            ],
+            hashtags: ["#FitnessTips", "#GymMotivation", "#WorkoutRoutine", "#FatLossJourney", "#FitIndia"],
+            tips: [
+                "Form correction (Right vs Wrong posture) wali comparison videos banayein.",
+                "Clear audio/voiceover ke sath simple workout step-by-step batayein.",
+                "Fast-paced music aur energetic transitions use karein."
+            ]
+        },
+        fashion: {
+            title: "👗 Fashion & Style Strategy",
+            hooks: [
+                "“3 Outfit Combinations jo har bande par acche lagte hain!”",
+                "“Budget Budget Stylist Hacks for 2026!”",
+                "“Stop wearing this if you want to look attractive!”"
+            ],
+            hashtags: ["#FashionHacks", "#StyleInspiration", "#OutfitOfTheDay", "#MenStyle", "#BudgetFashion"],
+            tips: [
+                "Good natural lighting ya ring light ka use karein video recording ke waqt.",
+                "Transition sound effects (swoosh/snap) ke sath outfit changes dikhayein.",
+                "Links aur details caption/bio mein mention karein."
+            ]
         }
     };
 
+    let currentCategory = 'tech';
+
     function loadContent(catKey) {
+        currentCategory = catKey;
+        
         // Toggle Active Button
         document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
+        if(event && event.target) {
+            event.target.classList.add('active');
+        }
 
         const catData = data[catKey];
         document.getElementById('cat-title').innerText = catData.title;
 
         // Load Hooks
         const hooksContainer = document.getElementById('hooks-container');
-        hooksContainer.innerHTML = catData.hooks.map(hook => `<div class="hook-box">👉 ${hook}</div>`).join('');
+        hooksContainer.innerHTML = catData.hooks.map(hook => `
+            <div class="hook-box">
+                <span>👉 ${hook}</span>
+                <button class="mini-copy" onclick="copyText('${hook.replace(/["']/g, '')}')">Copy</button>
+            </div>
+        `).join('');
 
         // Load Hashtags
         const hashtagsContainer = document.getElementById('hashtags-container');
-        hashtagsContainer.innerHTML = catData.hashtags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        hashtagsContainer.innerHTML = catData.hashtags.map(tag => `
+            <span class="tag" onclick="copyText('${tag}')">${tag}</span>
+        `).join('');
 
         // Load Tips
         const tipsContainer = document.getElementById('tips-container');
         tipsContainer.innerHTML = catData.tips.map(tip => `<li>${tip}</li>`).join('');
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast(`Copied: "${text.substring(0, 20)}..."`);
+        });
+    }
+
+    function copyAllHashtags() {
+        const tags = data[currentCategory].hashtags.join(' ');
+        navigator.clipboard.writeText(tags).then(() => {
+            showToast('All Hashtags Copied! 📋');
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.className = "show";
+        setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2000);
     }
 
     // Initial Load
